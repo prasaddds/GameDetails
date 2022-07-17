@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import Blog from "./components/Blog";
+import Heading from "./components/Heading";
+import Layout from "./components/Layout";
+import List from "./components/List";
+import Navbar from "./components/Navbar";
+import { colors } from "./styles/global";
+import { main } from "./styles/homeStyles";
+import { Routes, Route } from "react-router-dom";
+import Create from "./components/Create";
+import { useState } from "react";
 
-function App() {
+const App = () => {
+  const [pending, setPending] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Layout>
+        <Navbar />
+        <hr style={{ marginTop: "3rem", color: colors.text }} />
+
+        <Heading />
+
+        <hr />
+
+        <div style={main}>
+          <Routes>
+            <Route
+              path="/"
+              element={<Blog pending={pending} setPending={setPending} />}
+            />
+            <Route
+              path="/create"
+              element={<Create pending={pending} setPending={setPending} />}
+            />
+            <Route
+              path="/:id"
+              element={<Blog pending={pending} setPending={setPending} />}
+            />
+          </Routes>
+
+          <List pending={pending} />
+        </div>
+      </Layout>
+    </>
   );
-}
+};
 
 export default App;
